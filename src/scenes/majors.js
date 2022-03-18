@@ -3,7 +3,7 @@ const { Markup, Scenes } = require('telegraf');
 const majors = new Scenes.BaseScene('MAJORS_ID');
 
 majors.enter( async (ctx) => {
-  await ctx.reply('Выбери направление', Markup.inlineKeyboard([
+  await ctx.reply('Выберите направление', Markup.inlineKeyboard([
     Markup.button.callback('Экономика', 'ECONOMY'),
     Markup.button.callback('Экономическая безопасность', 'SECURITY'),
   ]));

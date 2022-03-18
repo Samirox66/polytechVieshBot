@@ -20,25 +20,25 @@ security.action('BACK', async (ctx) => {
 security.action('ONE', async (ctx) => {
   ctx.answerCbQuery();
   await ctx.reply('1 курс');
-  return ctx.scene.leave();
+  return ctx.scene.enter('SECURITY_COURSE1_ID');
 });
 
 security.action('TWO', async (ctx) => {
   ctx.answerCbQuery();
   await ctx.reply('2 курс');
-  return ctx.scene.leave();
+  return ctx.scene.enter('SECURITY_COURSE1_ID');
 });
 
 security.action('THREE', async (ctx) => {
   ctx.answerCbQuery();
   await ctx.reply('3 курс');
-  return ctx.scene.leave();
+  return ctx.scene.enter('SECURITY_COURSE1_ID');
 });
 
 security.action('FOUR', async (ctx) => {
   ctx.answerCbQuery();
   await ctx.reply('4 курс');
-  return ctx.scene.leave();
+  return ctx.scene.enter('SECURITY_COURSE1_ID');
 });
 
 module.exports = security;

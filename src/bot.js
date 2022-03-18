@@ -1,13 +1,24 @@
+const course = require('./scenes/modules/course');
+
 const majors = require('./scenes/majors');
-const economy = require('./scenes/economy');
-const security = require('./scenes/security');
+const economy = require('./scenes/majors/economy/economy');
+const security = require('./scenes/majors/security/security');
+const economyCourse1 = course('ECONOMY_COURSE1_ID', 'ECONOMY_ID');
+const economyCourse2 = course('ECONOMY_COURSE2_ID', 'ECONOMY_ID');
+const economyCourse3 = course('ECONOMY_COURSE3_ID', 'ECONOMY_ID');
+const economyCourse4 = course('ECONOMY_COURSE4_ID', 'ECONOMY_ID');
+const securityCourse1 = course('SECURITY_COURSE1_ID', 'SECURITY_ID');
+const securityCourse2 = course('SECURITY_COURSE2_ID', 'SECURITY_ID');
+const securityCourse3 = course('SECURITY_COURSE3_ID', 'SECURITY_ID');
+const securityCourse4 = course('SECURITY_COURSE4_ID', 'SECURITY_ID');
 const dotenv = require('dotenv');
 const db = require('./config/db');
 const { Telegraf, Scenes, session } = require('telegraf');
 dotenv.config();
 
 const stage = new Scenes.Stage();
-stage.register(majors, economy, security);
+stage.register(majors, economy, security, economyCourse1, economyCourse2, economyCourse3, economyCourse4,
+  securityCourse1, securityCourse2, securityCourse3, securityCourse4);
 
 const bot = new Telegraf(process.env.TOKEN);
 bot.use(session());

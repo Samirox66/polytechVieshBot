@@ -20,25 +20,25 @@ economy.action('BACK', async (ctx) => {
 economy.action('ONE', async (ctx) => {
   ctx.answerCbQuery();
   await ctx.reply('1 курс');
-  return ctx.scene.enter('MAJORS_ID');
+  return ctx.scene.enter('ECONOMY_COURSE1_ID');
 });
 
 economy.action('TWO', async (ctx) => {
   ctx.answerCbQuery();
   await ctx.reply('2 курс');
-  return ctx.scene.leave();
+  return ctx.scene.enter('ECONOMY_COURSE2_ID');
 });
 
 economy.action('THREE', async (ctx) => {
   ctx.answerCbQuery();
   await ctx.reply('3 курс');
-  return ctx.scene.leave();
+  return ctx.scene.enter('ECONOMY_COURSE3_ID');
 });
 
 economy.action('FOUR', async (ctx) => {
   ctx.answerCbQuery();
   await ctx.reply('4 курс');
-  return ctx.scene.leave();
+  return ctx.scene.enter('ECONOMY_COURSE4_ID');
 });
 
 module.exports = economy;
