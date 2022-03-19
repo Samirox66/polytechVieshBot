@@ -17,6 +17,6 @@ majors.action('ECONOMY', async (ctx) => {
 majors.action('SECURITY', async (ctx) => {
   ctx.answerCbQuery();
   return await ctx.scene.enter('SECURITY_ID');
-})
+});
 
 module.exports = majors;
