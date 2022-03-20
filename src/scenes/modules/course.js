@@ -13,7 +13,7 @@ const course = function(id, prevId) {
 
   course.action('STUDYING', async (ctx) => {
     ctx.answerCbQuery();
-    return await ctx.scene.enter('MAJORS_ID');
+    return await ctx.scene.enter('ECONOMY_COURSE1_STUDY_ID');
   });
 
   course.action('ELSE', async (ctx) => {
