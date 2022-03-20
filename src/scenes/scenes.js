@@ -7,16 +7,16 @@ scenes.push(require('./majors'));
 scenes.push(require('./economy'));
 scenes.push(require('./security'));
 
-scenes.push(course('ECONOMY_COURSE1_ID', 'ECONOMY_ID'));
-scenes.push(course('ECONOMY_COURSE2_ID', 'ECONOMY_ID'));
-scenes.push(course('ECONOMY_COURSE3_ID', 'ECONOMY_ID'));
-scenes.push(course('ECONOMY_COURSE4_ID', 'ECONOMY_ID'));
+scenes.push(course('ECONOMY_COURSE1', 'ECONOMY'));
+scenes.push(course('ECONOMY_COURSE2', 'ECONOMY'));
+scenes.push(course('ECONOMY_COURSE3', 'ECONOMY'));
+scenes.push(course('ECONOMY_COURSE4', 'ECONOMY'));
 
-scenes.push(course('SECURITY_COURSE1_ID', 'SECURITY_ID'));
-scenes.push(course('SECURITY_COURSE2_ID', 'SECURITY_ID'));
-scenes.push(course('SECURITY_COURSE3_ID', 'SECURITY_ID'));
-scenes.push(course('SECURITY_COURSE4_ID', 'SECURITY_ID'));
+scenes.push(course('SECURITY_COURSE1', 'SECURITY'));
+scenes.push(course('SECURITY_COURSE2', 'SECURITY'));
+scenes.push(course('SECURITY_COURSE3', 'SECURITY'));
+scenes.push(course('SECURITY_COURSE4', 'SECURITY'));
 
-scenes.push(group('ECONOMY_COURSE1_STUDY_ID', 'ECONOMY_COURSE1_ID'));
+scenes.push(group('ECONOMY_COURSE1_STUDY', 'ECONOMY_COURSE1'));
 
 module.exports = scenes;

@@ -34,7 +34,7 @@ bot.command('addAdmin', async (ctx) => {
 
 bot.start((ctx) => ctx.reply('Нажмите или введите /majors'));
 bot.command('majors', (ctx) => {
-  return ctx.scene.enter('MAJORS_ID');
+  return ctx.scene.enter('MAJORS');
 });
 bot.launch();
 

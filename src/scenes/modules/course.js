@@ -13,12 +13,12 @@ const course = function(id, prevId) {
 
   course.action('STUDYING', async (ctx) => {
     ctx.answerCbQuery();
-    return await ctx.scene.enter('ECONOMY_COURSE1_STUDY_ID');
+    return await ctx.scene.enter(`${id}_STUDY`);
   });
 
   course.action('ELSE', async (ctx) => {
     ctx.answerCbQuery();
-    return await ctx.scene.enter('MAJORS_ID');
+    return await ctx.scene.enter('MAJORS');
   });
 
   course.action('BACK', (ctx) => {

@@ -1,6 +1,6 @@
 const { Markup, Scenes } = require('telegraf');
 
-const majors = new Scenes.BaseScene('MAJORS_ID');
+const majors = new Scenes.BaseScene('MAJORS');
 
 majors.enter( async (ctx) => {
   await ctx.reply('Выберите направление', Markup.inlineKeyboard([
@@ -11,12 +11,12 @@ majors.enter( async (ctx) => {
 
 majors.action('ECONOMY', async (ctx) => {
   ctx.answerCbQuery();
-  return await ctx.scene.enter('ECONOMY_ID');
+  return await ctx.scene.enter('ECONOMY');
 });
 
 majors.action('SECURITY', async (ctx) => {
   ctx.answerCbQuery();
-  return await ctx.scene.enter('SECURITY_ID');
+  return await ctx.scene.enter('SECURITY');
 });
 
 module.exports = majors;
