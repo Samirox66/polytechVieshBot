@@ -1,4 +1,4 @@
-const course = require('./modules/course');
+const course = require('./course');
 const group = require('./group');
 
 const scenes = [];
