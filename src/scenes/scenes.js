@@ -39,13 +39,6 @@ scenes.push(...require('./branches/studyTime'));
 scenes.push(...require('./branches/applications'));
 scenes.push(...require('./branches/debts'));
 
-scenes.push(...require('./questions/practiceDates'));
-scenes.push(...require('./questions/practiceExams'));
-scenes.push(...require('./questions/paperworks'));
-scenes.push(...require('./questions/tutors'));
-
-scenes.push(...require('./questions/gias'));
-scenes.push(...require('./questions/payments'));
 scenes.push(...require('./questions/questions'));
 
 //scenes.push(group('ECONOMY_COURSE1_STUDY', 'ECONOMY_COURSE1'));

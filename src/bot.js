@@ -23,15 +23,9 @@ bot.command('majors', (ctx) => {
   return ctx.scene.enter('MAJORS');
 });
 
-bot.action('YES', (ctx) => {
-  ctx.answerCbQuery();
-  if (ctx.session.__scenes.state.answer !== false) {
-    ctx.session.__scenes.state.answer = false;
-    console.log('yep');
-  }
-});
+bot.action('YES', commands.onAddQuestion);
 
-bot.on('message', commands.onAddQuestion);
+bot.on('message', commands.message);
 bot.launch();
 
 
