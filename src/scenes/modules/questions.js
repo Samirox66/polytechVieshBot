@@ -5,13 +5,6 @@ const { Markup, Scenes } = require('telegraf');
 const questionScene = function(id, prevId) {
   const questionScene = new Scenes.BaseScene(id);
 
-  const getQuestions = async () => {
-    const questionsQuery = `SELECT question, answer FROM questions WHERE part="${id}";`;
-    return await db.execute(questionsQuery);
-  }
-
-  const questions = getQuestions();
-
   questionScene.enter( async (ctx) => {
     const isAdminQuery = `SELECT telegram_id FROM admins WHERE telegram_id="${ctx.from.id}";`;
     const [isAdmin] = await db.execute(isAdminQuery);
@@ -21,6 +14,11 @@ const questionScene = function(id, prevId) {
     let i = 1;
     const questionButtons = [];
     for (let question of questions) {
+      questionScene.action(`QUESTION_${i}`, async (ctx) => {
+        await ctx.reply(`Вопрос: ${question.question}`);
+        return await ctx.reply(`Ответ: ${question.answer}`);
+      })
+
       await ctx.reply(`${i}. ${question.question}`);
       questionButtons.push(Markup.button.callback(i, `QUESTION_${i}`));
       i += 1;
@@ -29,7 +27,7 @@ const questionScene = function(id, prevId) {
     const buttons = [];
     buttons.push(Markup.button.callback('Назад', 'BACK'));
     if (isAdmin.length) {
-        buttons.push(Markup.button.callback('Добавить вопрос', 'ADD_QUESTION'))
+      buttons.push(Markup.button.callback('Добавить вопрос', 'ADD_QUESTION'))
     }
 
     await ctx.reply('Выберите вопрос', Markup.inlineKeyboard([questionButtons, buttons]));

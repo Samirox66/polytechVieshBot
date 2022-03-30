@@ -5,6 +5,8 @@ const message = (ctx) => {
     ctx.reply('Иди погуляй')
   } else if (ctx.session.__scenes.state) {
     onSaveQuestion(ctx);
+  } else {
+    ctx.reply('Я слишком глупый, чтобы на это ответить');
   }
 }
 
