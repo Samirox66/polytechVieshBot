@@ -7,7 +7,6 @@ const questionScene = function (id, prevId) {
   questionScene.enter(async (ctx) => {
     const isAdminQuery = `SELECT telegram_id FROM admins WHERE telegram_id="${ctx.from.id}";`;
     const [isAdmin] = await db.execute(isAdminQuery);
-    await ctx.reply('Вопросы');
     const questionsQuery = `SELECT question, answer FROM questions WHERE part="${id}";`;
     const [questions] = await db.execute(questionsQuery);
     let i = 1;
@@ -16,6 +15,7 @@ const questionScene = function (id, prevId) {
     let questionString = '';
     for (let question of questions) {
       questionScene.action(`QUESTION_${i}`, async (ctx) => {
+        ctx.answerCbQuery();
         await ctx.reply(`Вопрос: ${question.question}`);
         return await ctx.reply(`Ответ: ${question.answer}`);
       });
@@ -33,18 +33,24 @@ const questionScene = function (id, prevId) {
       buttons.push(questionButtons);
     }
 
-    await ctx.reply(questionString);
-    const actionButtons = [];
-    actionButtons.push(Markup.button.callback('Назад', 'BACK'));
-    if (isAdmin.length) {
-      actionButtons.push(
-        Markup.button.callback('Добавить вопрос', 'ADD_QUESTION')
-      );
+    if (questionString !== '') {
+      await ctx.reply(questionString);
     }
 
-    buttons.push(actionButtons);
-    await ctx.reply('Выберите вопрос', Markup.inlineKeyboard(buttons));
-    return;
+    buttons.push([Markup.button.callback('Назад', 'BACK')]);
+    if (isAdmin.length) {
+      buttons.push([Markup.button.callback('Добавить вопрос', 'ADD_QUESTION')]);
+      if (questionButtons.length != 0) {
+        buttons.push([
+          Markup.button.callback('Удалить вопрос', 'DELETE_QUESTION'),
+        ]);
+      }
+    }
+
+    return await ctx.replyWithHTML(
+      '<i>Далее</i>',
+      Markup.inlineKeyboard(buttons)
+    );
   });
 
   questionScene.action('BACK', async (ctx) => {

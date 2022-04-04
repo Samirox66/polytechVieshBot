@@ -28,7 +28,6 @@ bot.action('YES', commands.onAddQuestion);
 bot.on('message', commands.message);
 bot.launch();
 
-
 // Enable graceful stop
 process.once('SIGINT', () => bot.stop('SIGINT'));
 process.once('SIGTERM', () => bot.stop('SIGTERM'));
