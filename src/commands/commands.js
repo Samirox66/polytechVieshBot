@@ -1,11 +1,13 @@
 const addAdmin = require('./addAdmin');
 const message = require('./message');
 const onAddQuestion = require('./onAddQuestion');
+const onDeleteQuestion = require('./onDeleteQuestion');
 
 const commands = {
   addAdmin,
   message,
-  onAddQuestion
-}
+  onAddQuestion,
+  onDeleteQuestion,
+};
 
 module.exports = commands;

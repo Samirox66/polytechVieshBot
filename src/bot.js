@@ -24,6 +24,7 @@ bot.command('majors', (ctx) => {
 });
 
 bot.action('YES', commands.onAddQuestion);
+bot.action('DELETE', commands.onDeleteQuestion);
 
 bot.on('message', commands.message);
 bot.launch();

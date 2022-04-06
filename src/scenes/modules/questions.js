@@ -7,7 +7,7 @@ const questionScene = function (id, prevId) {
   questionScene.enter(async (ctx) => {
     const isAdminQuery = `SELECT telegram_id FROM admins WHERE telegram_id="${ctx.from.id}";`;
     const [isAdmin] = await db.execute(isAdminQuery);
-    const questionsQuery = `SELECT question, answer FROM questions WHERE part="${id}";`;
+    const questionsQuery = `SELECT question, answer, id FROM questions WHERE part="${id}";`;
     const [questions] = await db.execute(questionsQuery);
     let i = 1;
     let questionButtons = [];
@@ -31,6 +31,7 @@ const questionScene = function (id, prevId) {
 
     if (questionButtons.length != 0) {
       buttons.push(questionButtons);
+      ctx.session.__scenes.state.questions = questions;
     }
 
     if (questionString !== '') {
@@ -60,8 +61,15 @@ const questionScene = function (id, prevId) {
 
   questionScene.action('ADD_QUESTION', async (ctx) => {
     ctx.answerCbQuery();
-    ctx.scene.ctx.session.__scenes.state.question = true;
+    ctx.session.__scenes.state.addQuestion = true;
     await ctx.reply('Введите вопрос');
+  });
+
+  questionScene.action('DELETE_QUESTION', async (ctx) => {
+    ctx.answerCbQuery();
+    ctx.session.__scenes.state.deleteQuestion = true;
+    ctx.session.__scenes.state.showDeletingQuestion = true;
+    await ctx.reply('Введите номер вопроса');
   });
 
   return questionScene;
