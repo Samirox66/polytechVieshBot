@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/bot.js",
-    "dev": "node src/bot.js"
+    "dev": "nodemon src/bot.js",
+    "start": "node src/bot.js"
   },
   "keywords": [],
   "author": "",
@@ -17,5 +17,8 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
+  },
+  "engines": {
+    "node": "14.x"
   }
 }
