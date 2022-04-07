@@ -27,12 +27,7 @@ bot.action('YES', commands.onAddQuestion);
 bot.action('DELETE', commands.onDeleteQuestion);
 
 bot.on('message', commands.message);
-bot.launch({
-  webhook: {
-    domain: 'https://polytech-viesh-bot.herokuapp.com/',
-    port: process.env.PORT || 80,
-  },
-});
+bot.launch();
 
 // Enable graceful stop
 process.once('SIGINT', () => bot.stop('SIGINT'));
