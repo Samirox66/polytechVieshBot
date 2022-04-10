@@ -61,6 +61,8 @@ const questionScene = function (id, prevId) {
       );
     } catch (error) {
       console.log(error);
+      await ctx.reply('База данных недоступна');
+      await ctx.scene.enter(prevId);
     }
   });
 

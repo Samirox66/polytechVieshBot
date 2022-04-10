@@ -10,29 +10,29 @@ const branch = function (id, buttonsProp, title) {
       try {
         ctx.answerCbQuery();
         if (button.link) {
-          const tutorQuery = `SELECT link FROM tutors where question="${button.id}";`;
+          const tutorQuery = `SELECT link FROM tutors where question="${id}";`;
           const [tutor] = await db.execute(tutorQuery);
           const isAdminQuery = `SELECT telegram_id FROM admins WHERE telegram_id="${ctx.from.id}";`;
           const [isAdmin] = await db.execute(isAdminQuery);
-          if (tutor && isAdmin.length) {
+          if (tutor.length && isAdmin.length) {
             return await ctx.reply(
               `Вот, кто вам поможет ${tutor[0].link}`,
               Markup.inlineKeyboard([
                 Markup.button.callback(
                   'Изменить ответственного',
-                  'CHANGE_TUTOR'
+                  'REPLACE_TUTOR'
                 ),
               ])
             );
-          } else if (tutor) {
+          } else if (tutor.length) {
             return await ctx.reply(`Вот, кто вам поможет ${tutor[0].link}`);
           } else if (isAdmin.length) {
             return await ctx.reply(
               `Пока что вам тут никто не поможет`,
               Markup.inlineKeyboard([
                 Markup.button.callback(
-                  'Изменить ответственного',
-                  'CHANGE_TUTOR'
+                  'Добавить ответственного',
+                  'WRITE_TUTOR'
                 ),
               ])
             );
@@ -45,17 +45,29 @@ const branch = function (id, buttonsProp, title) {
         return await ctx.scene.enter(button.id);
       } catch (error) {
         console.log(error);
+        await ctx.reply('База данных недоступна');
       }
     });
   }
 
-  branch.action('CHANGE_TUTOR', async (ctx) => {
+  branch.action('WRITE_TUTOR', async (ctx) => {
     try {
       ctx.answerCbQuery();
       ctx.session.__scenes.state.changeTutor = true;
       return await ctx.reply('Добавьте ссылку');
     } catch (error) {
       console.log(error);
+    }
+  });
+
+  branch.action('REPLACE_TUTOR', async (ctx) => {
+    try {
+      ctx.answerCbQuery();
+      ctx.session.__scenes.state.changeTutor = true;
+      ctx.session.__scenes.state.replaceTutor = true;
+      return await ctx.reply('Добавьте ссылку');
+    } catch (err) {
+      console.log(err);
     }
   });
 
