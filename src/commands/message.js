@@ -15,7 +15,7 @@ const message = async (ctx) => {
       ctx.replyWithHTML(
         'Секретарь <a>https://www.youtube.com/watch?v=jCkzNUM6Rx8&ab_channel=%D0%94%D0%BD%D0%B5%D0%B2%D0%BD%D0%B8%D0%BA%D0%A1%D0%B8%D1%81%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B0</a>'
       );
-    } else if ((ctx.message.from.id = 1023963762)) {
+    } else if (ctx.message.from.id === 1023963762) {
       ctx.reply(
         'Ира, не стрессуй\nЛучше посмотри видяшку <a>https://www.youtube.com/watch?v=SfW-Ll4xtX4&ab_channel=Baraban-TV</a>'
       );
