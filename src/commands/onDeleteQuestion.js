@@ -15,7 +15,6 @@ const onDeleteQuestion = async (ctx) => {
       );
       ctx.session.__scenes.state.number = ctx.update.message.text - 1;
       ctx.session.__scenes.state.showDeletingQuestion = false;
-      ctx.session.__scenes.state.deleteQuestion;
       return await ctx.reply(
         'Удалить из базы данных?',
         Markup.inlineKeyboard([Markup.button.callback('Да', 'DELETE')])
@@ -24,6 +23,7 @@ const onDeleteQuestion = async (ctx) => {
       if (
         ctx.session.__scenes.state.questions[ctx.session.__scenes.state.number]
       ) {
+        ctx.answerCbQuery();
         const deleteQuery = `DELETE FROM questions WHERE id="${
           ctx.session.__scenes.state.questions[
             ctx.session.__scenes.state.number
@@ -31,6 +31,7 @@ const onDeleteQuestion = async (ctx) => {
         }";`;
         await db.execute(deleteQuery);
         await ctx.replyWithHTML('<b>Успех</b>');
+        ctx.session.__scenes.state.deleteQuestion = false;
       } else {
         ctx.reply('Неправильный номер вопроса');
       }

@@ -11,36 +11,23 @@ const questionScene = function (id, prevId) {
       const questionsQuery = `SELECT question, answer, id FROM questions WHERE part="${id}";`;
       const [questions] = await db.execute(questionsQuery);
       let i = 1;
-      let questionButtons = [];
       const buttons = [];
       let questionString = '';
-      for (let question of questions) {
-        questionScene.action(`QUESTION_${i}`, async (ctx) => {
-          try {
-            ctx.answerCbQuery();
-            await ctx.reply(`Вопрос: ${question.question}`);
-            return await ctx.reply(`Ответ: ${question.answer}`);
-          } catch (error) {
-            console.log(error);
-          }
-        });
 
-        questionString += `${i}. ${question.question}\n`;
-        questionButtons.push(Markup.button.callback(i, `QUESTION_${i}`));
-        if (i % 6 === 0) {
-          buttons.push(questionButtons);
-          questionButtons = [];
-        }
-        i += 1;
-      }
+      questions.forEach((question, index) => {
+        questionString += `<b>${index + 1}. ${question.question}?</b>\n${
+          question.answer
+        }\n`;
+      });
 
-      if (questionButtons.length != 0) {
-        buttons.push(questionButtons);
+      if (questions.length != 0) {
         ctx.session.__scenes.state.questions = questions;
       }
 
       if (questionString !== '') {
-        await ctx.reply(questionString);
+        await ctx.replyWithHTML(questionString);
+      } else {
+        await ctx.reply('Здесь вопросов нет');
       }
 
       buttons.push([Markup.button.callback('Назад', 'BACK')]);
@@ -48,9 +35,12 @@ const questionScene = function (id, prevId) {
         buttons.push([
           Markup.button.callback('Добавить вопрос', 'ADD_QUESTION'),
         ]);
-        if (questionButtons.length != 0) {
+        if (questions.length != 0) {
           buttons.push([
             Markup.button.callback('Удалить вопрос', 'DELETE_QUESTION'),
+          ]);
+          buttons.push([
+            Markup.button.callback('Изменить ответ', 'CHANGE_ANSWER'),
           ]);
         }
       }
@@ -90,6 +80,17 @@ const questionScene = function (id, prevId) {
       ctx.answerCbQuery();
       ctx.session.__scenes.state.deleteQuestion = true;
       ctx.session.__scenes.state.showDeletingQuestion = true;
+      await ctx.reply('Введите номер вопроса');
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
+  questionScene.action('CHANGE_ANSWER', async (ctx) => {
+    try {
+      ctx.answerCbQuery();
+      ctx.session.__scenes.state.changeAnswer = true;
+      ctx.session.__scenes.state.showChangingAnswer = true;
       await ctx.reply('Введите номер вопроса');
     } catch (error) {
       console.log(error);

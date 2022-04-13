@@ -11,7 +11,7 @@ const onAddQuestion = async (ctx) => {
     VALUES("${ctx.session.__scenes.state.addQuestion}", "${ctx.session.__scenes.state.answer}", "${ctx.session.__scenes.current}")`;
       await db.execute(insertQuery);
       ctx.replyWithHTML('<b>Успех!</b>');
-      ctx.scene.enter(ctx.session.__scenes.current);
+      return await ctx.scene.enter(ctx.session.__scenes.current);
     }
   } catch (error) {
     console.log(error);
