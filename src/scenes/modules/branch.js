@@ -71,16 +71,18 @@ const branch = function (id, buttonsProp, title, main) {
     }
   });
 
-  branch.action('NEW_ADMIN', async (ctx) => {
-    try {
-      ctx.answerCbQuery();
-      ctx.session.__scenes.state.addNewAdmin = true;
-      ctx.session.__scenes.state.showNewAdmin = true;
-      return await ctx.reply('Введите ник нового администратора (без @)');
-    } catch (err) {
-      console.log(err);
-    }
-  });
+  if (main) {
+    branch.action('NEW_ADMIN', async (ctx) => {
+      try {
+        ctx.answerCbQuery();
+        ctx.session.__scenes.state.addNewAdmin = true;
+        ctx.session.__scenes.state.showNewAdmin = true;
+        return await ctx.reply('Введите ник нового администратора\n(без @)');
+      } catch (err) {
+        console.log(err);
+      }
+    });
+  }
 
   branch.enter(async (ctx) => {
     try {
