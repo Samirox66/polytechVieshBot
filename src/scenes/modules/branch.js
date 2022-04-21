@@ -92,12 +92,7 @@ const branch = function (id, buttonsProp, title, main) {
             title,
             Markup.inlineKeyboard([
               ...buttons,
-              [
-                Markup.button.callback(
-                  'Добавить нового админа',
-                  'ADD_NEW_ADMIN'
-                ),
-              ],
+              [Markup.button.callback('Добавить нового админа', 'NEW_ADMIN')],
             ])
           );
         }
