@@ -88,12 +88,22 @@ const branch = function (id, buttonsProp, title, main) {
         const isAdminQuery = `SELECT telegram_id FROM admins WHERE telegram_id="${ctx.from.username}";`;
         const [isAdmin] = await db.execute(isAdminQuery);
         if (isAdmin.length) {
-          buttons.push([
-            Markup.button.callback('Добавить нового админа', 'NEW_ADMIN'),
-          ]);
+          return await ctx.reply(
+            title,
+            Markup.inlineKeyboard([
+              ...buttons,
+              [
+                Markup.button.callback(
+                  'Добавить нового админа',
+                  'ADD_NEW_ADMIN'
+                ),
+              ],
+            ])
+          );
         }
       }
-      await ctx.reply(title, Markup.inlineKeyboard(buttons));
+
+      return await ctx.reply(title, Markup.inlineKeyboard(buttons));
     } catch (error) {
       console.log(error);
     }
