@@ -1,7 +1,7 @@
 const { Markup, Scenes } = require('telegraf');
 const db = require('../../config/db');
 
-const branch = function (id, buttonsProp, title) {
+const branch = function (id, buttonsProp, title, main) {
   const buttons = [];
   const branch = new Scenes.BaseScene(id);
   for (let button of buttonsProp) {
@@ -71,8 +71,28 @@ const branch = function (id, buttonsProp, title) {
     }
   });
 
+  branch.action('NEW_ADMIN', async (ctx) => {
+    try {
+      ctx.answerCbQuery();
+      ctx.session.__scenes.state.addNewAdmin = true;
+      ctx.session.__scenes.state.showNewAdmin = true;
+      return await ctx.reply('Введите ник нового администратора (без @)');
+    } catch (err) {
+      console.log(err);
+    }
+  });
+
   branch.enter(async (ctx) => {
     try {
+      if (main) {
+        const isAdminQuery = `SELECT telegram_id FROM admins WHERE telegram_id="${ctx.from.username}";`;
+        const [isAdmin] = await db.execute(isAdminQuery);
+        if (isAdmin.length) {
+          buttons.push([
+            Markup.button.callback('Добавить нового админа', 'NEW_ADMIN'),
+          ]);
+        }
+      }
       await ctx.reply(title, Markup.inlineKeyboard(buttons));
     } catch (error) {
       console.log(error);

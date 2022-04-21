@@ -2,6 +2,7 @@ const onSaveQuestion = require('./onSaveQuestion');
 const onDeleteQuestion = require('./onDeleteQuestion');
 const onChangeTutor = require('./onChangeTutor');
 const onChangeAnswer = require('./onChangeAnswer');
+const addAdmin = require('./addAdmin');
 
 const message = async (ctx) => {
   try {
@@ -40,6 +41,8 @@ const message = async (ctx) => {
       ctx.session.__scenes.state.changeAnswer
     ) {
       onChangeAnswer(ctx);
+    } else if (ctx.session.__scenes.state.addNewAdmin) {
+      addAdmin(ctx);
     } else {
       await ctx.reply('Я слишком глупый, чтобы на это ответить');
       console.log(ctx.message.from);

@@ -1,24 +1,34 @@
+const { Markup } = require('telegraf');
 const db = require('../config/db');
 
 const addAdmin = async (ctx) => {
   try {
-    const isAdminQuery = `SELECT telegram_id FROM admins WHERE telegram_id="${ctx.from.id}";`;
-    const [isAdmin] = await db.execute(isAdminQuery);
-    console.log(isAdmin);
-    if (isAdmin.length) {
-      ctx.reply('Вы уже админ');
-      return;
+    if (ctx.session.__scenes.state.showNewAdmin) {
+      ctx.session.__scenes.state.showNewAdmin = false;
+      const isAdminQuery = `SELECT telegram_id FROM admins WHERE telegram_id="${ctx.update.message.text}";`;
+      const [isAdmin] = await db.execute(isAdminQuery);
+      if (isAdmin.length) {
+        ctx.session.__scenes.state.addNewAdmin = false;
+        return await ctx.reply('Данный человек уже админ');
+      }
+
+      ctx.session.__scenes.state.newAdmin = ctx.update.message.text;
+      return await ctx.reply(
+        `Сделать @${ctx.update.message.text} новым администратором?`,
+        Markup.inlineKeyboard([Markup.button.callback('Да', 'ADD_NEW_ADMIN')])
+      );
     }
 
-    const addToAdminsQuery = `INSERT INTO admins(
-    telegram_id,
-    first_name,
-    second_name
-    )
-    VALUES("${ctx.from.id}", "${ctx.from.first_name}", "${ctx.from.last_name}");`;
-    const addAdmin = await db.execute(addToAdminsQuery);
-    console.log(addAdmin);
-    ctx.reply(`${addAdmin.first_name} ${addAdmin.second_name}, стали админом`);
+    if (ctx.session.__scenes.state.newAdmin) {
+      ctx.answerCbQuery();
+      ctx.session.__scenes.state.addNewAdmin = false;
+      const addAdminQuery = `INSERT admins(telegram_id)
+      VALUES("${ctx.session.__scenes.state.newAdmin}");`;
+      await db.execute(addAdminQuery);
+      ctx.session.__scenes.state.newAdmin = undefined;
+      ctx.replyWithHTML('<b>Успех!</b>');
+      return await ctx.scene.enter(ctx.session.__scenes.current);
+    }
   } catch (error) {
     console.log(error);
   }

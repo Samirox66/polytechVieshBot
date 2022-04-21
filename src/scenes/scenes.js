@@ -13,7 +13,8 @@ scenes.push(
       { id: ID.TRANSFERS, text: 'Восстановление и переводы' },
       { id: ID.PRACTICE, text: 'Практика' },
     ],
-    'Выберите раздел'
+    'Выберите раздел',
+    true
   )
 );
 scenes.push(

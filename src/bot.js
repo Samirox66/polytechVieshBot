@@ -13,7 +13,6 @@ const bot = new Telegraf(process.env.TOKEN);
 bot.use(session());
 bot.use(stage.middleware());
 bot.help((ctx) => ctx.reply('commands:\n/start\n/hello\n/majors\n/addAdmin'));
-bot.command('addAdmin', commands.addAdmin);
 
 bot.start((ctx) => {
   return ctx.scene.enter(ID.MAIN);
@@ -27,6 +26,7 @@ bot.action('YES', commands.onAddQuestion);
 bot.action('DELETE', commands.onDeleteQuestion);
 bot.action('CHANGE_TUTOR', commands.onChangeTutor);
 bot.action('SAVE_NEW_ANSWER', commands.onChangeAnswer);
+bot.action('ADD_NEW_ADMIN', commands.addAdmin);
 
 bot.on('message', commands.message);
 bot.launch();
