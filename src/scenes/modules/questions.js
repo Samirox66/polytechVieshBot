@@ -6,11 +6,10 @@ const questionScene = function (id, prevId) {
 
   questionScene.enter(async (ctx) => {
     try {
-      const isAdminQuery = `SELECT telegram_id FROM admins WHERE telegram_id="${ctx.from.id}";`;
+      const isAdminQuery = `SELECT telegram_id FROM admins WHERE telegram_id="${ctx.from.username}";`;
       const [isAdmin] = await db.execute(isAdminQuery);
       const questionsQuery = `SELECT question, answer, id FROM questions WHERE part="${id}";`;
       const [questions] = await db.execute(questionsQuery);
-      let i = 1;
       const buttons = [];
       let questionString = '';
 

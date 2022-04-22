@@ -12,7 +12,7 @@ const branch = function (id, buttonsProp, title, main) {
         if (button.link) {
           const tutorQuery = `SELECT link FROM tutors where question="${id}";`;
           const [tutor] = await db.execute(tutorQuery);
-          const isAdminQuery = `SELECT telegram_id FROM admins WHERE telegram_id="${ctx.from.id}";`;
+          const isAdminQuery = `SELECT telegram_id FROM admins WHERE telegram_id="${ctx.from.username}";`;
           const [isAdmin] = await db.execute(isAdminQuery);
           if (tutor.length && isAdmin.length) {
             return await ctx.reply(
